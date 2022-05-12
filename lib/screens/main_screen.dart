@@ -34,7 +34,6 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
         onTap: (){
           FocusScope.of(context).unfocus();
         },
-
         child: Stack(
           children: [
             //배경
@@ -123,7 +122,7 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
                               child: Column(
                                 children: [
                                   Text(
-                                    "Login",
+                                    "로그인",
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: !isSignupScreen
@@ -152,7 +151,7 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
                               child: Column(
                                 children: [
                                   Text(
-                                    "Sign Up",
+                                    "회원가입",
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: !isSignupScreen
