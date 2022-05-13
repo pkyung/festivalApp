@@ -1,5 +1,6 @@
 import 'package:festival/config/palette.dart';
 import 'package:festival/screens/HomePage.dart';
+import 'package:festival/screens/WayAccess.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -472,7 +473,7 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => homePage()
+                                      builder: (context) => WayToAccess()
                                   )
                               );
                             }
