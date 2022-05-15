@@ -1,6 +1,7 @@
 import 'package:festival/config/palette.dart';
 import 'package:festival/screens/HomePage.dart';
 import 'package:festival/screens/Picture.dart';
+import 'package:festival/screens/WayToSearch.dart';
 import 'package:flutter/material.dart';
 
 class WayToAccess extends StatelessWidget {
@@ -95,30 +96,40 @@ class WayToAccess extends StatelessWidget {
             SizedBox(
               height: 35,
             ),
-            Container(
-              width: MediaQuery.of(context).size.width - 100,
-              height: 180,
-              decoration: BoxDecoration(
-                color: Palette.background2,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Icon(
-                      Icons.search_rounded,
-                      color: Colors.white,
-                      size: 90,
-                    ),
-                    Text(
-                      "축제 검색",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                      ),
+            GestureDetector(
+              onTap: (){
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => WayToSearch()
                     )
-                  ],
+                );
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width - 100,
+                height: 180,
+                decoration: BoxDecoration(
+                  color: Palette.background2,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(
+                        Icons.search_rounded,
+                        color: Colors.white,
+                        size: 90,
+                      ),
+                      Text(
+                        "축제 검색",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             )

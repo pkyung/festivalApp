@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:festival/config/palette.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class commentWrite extends StatefulWidget {
@@ -9,6 +11,11 @@ class commentWrite extends StatefulWidget {
 }
 
 class _commentWriteState extends State<commentWrite> {
+  final controller = TextEditingController();
+  final _authentication = FirebaseAuth.instance;
+
+  int id = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,14 +72,18 @@ class _commentWriteState extends State<commentWrite> {
                   SizedBox(
                     height: 25,
                   ),
-                  Form(
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                          hintText: "축제평을 입력하세요.",
-                          hintStyle: TextStyle(
-                            fontSize: 18,
-                            color: Palette.textColor1,
-                          )),
+                  Container(
+                    width: MediaQuery.of(context).size.width - 80,
+                    child: Form(
+                      child: TextFormField(
+                        controller: controller,
+                        decoration: InputDecoration(
+                            hintText: "축제평을 입력하세요.",
+                            hintStyle: TextStyle(
+                              fontSize: 18,
+                              color: Palette.textColor1,
+                            )),
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -110,7 +121,7 @@ class _commentWriteState extends State<commentWrite> {
                   child: ElevatedButton(
                       onPressed: () {},
                       child: Text(
-                        "글쓰기",
+                        "글 올리기",
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -118,11 +129,10 @@ class _commentWriteState extends State<commentWrite> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => commentWrite()));
-                  },
+                      final comments = controller.text;
+                      createComments(comment: comments);
+
+                     },
                   child: Text(
                     "글쓰기",
                     style: TextStyle(
@@ -139,5 +149,17 @@ class _commentWriteState extends State<commentWrite> {
         ),
       ),
     );
+
+  }
+
+  Future createComments({required String comment}) async {
+    id++;
+    final docComments = FirebaseFirestore.instance.collection("users").doc("my-id-%$id");
+    final json = {
+      "comments": comment,
+    };
+
+    await docComments.set(json);
+    Navigator.pop(context);
   }
 }
