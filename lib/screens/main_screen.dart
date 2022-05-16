@@ -190,7 +190,7 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
                                     username = value;
                                   },
                                   validator: (value){
-                                    if(value!.isEmpty || value!.length < 4){
+                                    if(value!.isEmpty || value.length < 4){
                                       return "Please enter at least 4 characters";
                                     }
                                     return null;
@@ -331,7 +331,7 @@ class _LoginSignUpScreenState extends State<LoginSignUpScreen> {
                                     userEmail = value;
                                   },
                                   validator: (value){
-                                    if(value!.isEmpty || value!.length < 4){
+                                    if(value!.isEmpty || value.length < 4){
                                       return "Please enter at least 4 characters";
                                     }
                                     return null;

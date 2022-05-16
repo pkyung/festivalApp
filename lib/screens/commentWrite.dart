@@ -12,9 +12,8 @@ class commentWrite extends StatefulWidget {
 
 class _commentWriteState extends State<commentWrite> {
   final controller = TextEditingController();
-  final _authentication = FirebaseAuth.instance;
-
-  int id = 0;
+  final _formKey = GlobalKey<FormState>();
+  
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +75,7 @@ class _commentWriteState extends State<commentWrite> {
                     width: MediaQuery.of(context).size.width - 80,
                     child: Form(
                       child: TextFormField(
+                        key: ValueKey(6),
                         controller: controller,
                         decoration: InputDecoration(
                             hintText: "축제평을 입력하세요.",
@@ -84,6 +84,7 @@ class _commentWriteState extends State<commentWrite> {
                               color: Palette.textColor1,
                             )),
                       ),
+                      key: _formKey,
                     ),
                   ),
                   SizedBox(
@@ -134,7 +135,7 @@ class _commentWriteState extends State<commentWrite> {
 
                      },
                   child: Text(
-                    "글쓰기",
+                    "글 올리기",
                     style: TextStyle(
                       color: Colors.white,
                     ),
@@ -153,8 +154,7 @@ class _commentWriteState extends State<commentWrite> {
   }
 
   Future createComments({required String comment}) async {
-    id++;
-    final docComments = FirebaseFirestore.instance.collection("users").doc("my-id-%$id");
+    final docComments = FirebaseFirestore.instance.collection("users").doc();
     final json = {
       "comments": comment,
     };

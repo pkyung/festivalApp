@@ -1,3 +1,4 @@
+import 'package:festival/screens/ParkingScore.dart';
 import 'package:flutter/material.dart';
 
 import '../config/palette.dart';
@@ -81,7 +82,14 @@ class _festivalInfState extends State<festivalInf> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 GestureDetector(
-                  onTap: (){},
+                  onTap: (){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ParkingScore()
+                        )
+                    );
+                  },
                   child: Container(
                     width: 105,
                     decoration: BoxDecoration(
