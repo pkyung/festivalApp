@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:festival/config/palette.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 enum Parking { confusion, spare, quiet }
@@ -11,7 +13,6 @@ class ParkingScore extends StatefulWidget {
 }
 
 class _ParkingScoreState extends State<ParkingScore> {
-  int n = 1;
   Parking _parking = Parking.spare;
 
 
@@ -83,7 +84,7 @@ class _ParkingScoreState extends State<ParkingScore> {
                         });
                       }),
                   RadioListTile(
-                      title: Text("한산"),
+                      title: Text("쾌적"),
                       secondary: Icon(Icons.sentiment_satisfied_alt_rounded),
                       value: Parking.spare,
                       groupValue: _parking,
@@ -93,7 +94,7 @@ class _ParkingScoreState extends State<ParkingScore> {
                         });
                       }),
                   SizedBox(
-                    height: 30,
+                    height: 40,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -106,7 +107,8 @@ class _ParkingScoreState extends State<ParkingScore> {
                       ),
                       ElevatedButton(
                         onPressed: () {
-
+                          final parking = _parking;
+                          createParking(parking: parking);
                         },
                         child: Text(
                           "반영하기",
@@ -124,5 +126,14 @@ class _ParkingScoreState extends State<ParkingScore> {
         ),
       ),
     );
+  }
+  Future createParking({required Parking parking}) async {
+    final docComments = FirebaseFirestore.instance.collection("parking").doc("parkingScore");
+    final json = {
+      "parking": describeEnum(parking)
+    };
+
+    await docComments.set(json);
+    Navigator.pop(context);
   }
 }

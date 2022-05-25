@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:festival/config/palette.dart';
 import 'package:festival/screens/festivalInf.dart';
 import 'package:flutter/material.dart';
@@ -63,43 +64,41 @@ class _homePageState extends State<homePage> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Palette.background2,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white,
-          type: BottomNavigationBarType.fixed,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.event_available,
-                color: Colors.white,
-              ),
-              label: "프로그램",
+        backgroundColor: Palette.background2,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white,
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.event_available,
+              color: Colors.white,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.library_books_outlined,
-                color: Colors.white,
-
-
-              ),
-              label: "축제소개",
+            label: "프로그램",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.library_books_outlined,
+              color: Colors.white,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.chat_outlined,
-                color: Colors.white,
-              ),
-              label: "한줄평",
+            label: "축제소개",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.chat_outlined,
+              color: Colors.white,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.error_outline,
-                color: Colors.white,
-              ),
-              label: "실시간 정보",
+            label: "한줄평",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.error_outline,
+              color: Colors.white,
             ),
-          ],
-        ),
+            label: "실시간 정보",
+          ),
+        ],
+      ),
       backgroundColor: Palette.background,
       body: Column(
         children: [
@@ -119,12 +118,8 @@ class _homePageState extends State<homePage> {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => festivalInf()
-                      )
-                  );
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => festivalInf()));
                 },
                 child: Text(
                   "자세히보기 >",
@@ -443,9 +438,7 @@ class _homePageState extends State<homePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Comment()
-                              )
-                          );
+                                  builder: (context) => Comment()));
                         },
                         child: Text(
                           "자세히보기 >",
@@ -468,7 +461,9 @@ class _homePageState extends State<homePage> {
                     height: 20,
                   ),
                   Text(
-                    "\" 여기 닭꼬치 푸드트럭 가서 꼭 사드세요! \"",
+                    "\" " +
+                        "Incheon is good place" +
+                        " \"",
                     style: TextStyle(
                       fontSize: 18,
                       color: Palette.textColor1,

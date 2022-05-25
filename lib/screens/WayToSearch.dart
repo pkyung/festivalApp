@@ -1,4 +1,5 @@
 import 'package:festival/config/palette.dart';
+import 'package:festival/screens/festivalList.dart';
 import 'package:flutter/material.dart';
 
 class WayToSearch extends StatelessWidget {
@@ -93,7 +94,14 @@ class WayToSearch extends StatelessWidget {
                     ),
                   ),
                   ElevatedButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => festivalList()
+                            )
+                        );
+                      },
                       child: Text(
                         "검색",
                         style: TextStyle(

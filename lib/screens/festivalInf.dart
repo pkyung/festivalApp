@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:festival/screens/ParkingScore.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,27 @@ class festivalInf extends StatefulWidget {
 }
 
 class _festivalInfState extends State<festivalInf> {
+  String parkingScore = "";
+  Future<dynamic> parkingScore1 = FirebaseFirestore.instance
+      .collection("parking")
+      .doc("parkingScore")
+      .get()
+      .then((DocumentSnapshot value) => (value.data()! as Map)["parking"]);
+
+
+  @override
+  void initState() {
+    parkingscore();
+    print(parkingScore);
+    print(parkingScore1);
+  }
+
+  Future<dynamic> parkingscore() async {
+    parkingScore = await parkingScore1;
+    print(parkingScore);
+    return parkingScore;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +92,7 @@ class _festivalInfState extends State<festivalInf> {
               height: 15,
             ),
             Text(
-              "버튼을 누르면 실시간 정보를 반영할 수 있습니다.",
+              "초록색, 파란색, 빨간색 순으로 혼잡합니다." ,
               style: TextStyle(
                 color: Palette.textColor1,
               ),
@@ -82,18 +104,21 @@ class _festivalInfState extends State<festivalInf> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ParkingScore()
-                        )
-                    );
+                            builder: (context) => ParkingScore()));
                   },
                   child: Container(
                     width: 105,
+                    height: 140,
                     decoration: BoxDecoration(
-                      color: Palette.background2,
+                      color: parkingScore.contains("confusion")
+                          ? Palette.red
+                          : parkingScore.contains("spare")
+                          ? Palette.green
+                          : Palette.background2,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Column(
@@ -101,26 +126,17 @@ class _festivalInfState extends State<festivalInf> {
                         SizedBox(
                           height: 15,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Icon(
-                              Icons.directions_car,
-                              color: Palette.textColor2,
-                            ),
-                            Text(
-                              "주차공간",
-                              style: TextStyle(
-                                color: Palette.textColor2,
-                              ),
-                            )
-                          ],
+                        Text(
+                          "주차공간",
+                          style: TextStyle(
+                            color: Palette.textColor2,
+                          ),
                         ),
                         SizedBox(
                           height: 10,
                         ),
                         Icon(
-                          Icons.emoji_emotions_outlined,
+                          Icons.directions_car,
                           color: Palette.textColor2,
                           size: 50,
                         ),
@@ -128,7 +144,11 @@ class _festivalInfState extends State<festivalInf> {
                           height: 10,
                         ),
                         Text(
-                          "쾌적",
+                          parkingScore == "confusion"
+                              ? "혼잡"
+                              : parkingScore == "spare"
+                              ? "쾌적"
+                              : "여유",
                           style: TextStyle(
                             color: Palette.textColor2,
                             fontSize: 15,
@@ -143,6 +163,7 @@ class _festivalInfState extends State<festivalInf> {
                 ),
                 Container(
                   width: 105,
+                  height: 140,
                   decoration: BoxDecoration(
                     color: Palette.background2,
                     borderRadius: BorderRadius.circular(15),
@@ -152,26 +173,17 @@ class _festivalInfState extends State<festivalInf> {
                       SizedBox(
                         height: 15,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Icon(
-                            Icons.directions_car,
-                            color: Palette.textColor2,
-                          ),
-                          Text(
-                            "주차공간",
-                            style: TextStyle(
-                              color: Palette.textColor2,
-                            ),
-                          )
-                        ],
+                      Text(
+                        "화장실",
+                        style: TextStyle(
+                          color: Palette.textColor2,
+                        ),
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       Icon(
-                        Icons.emoji_emotions_outlined,
+                        Icons.wc_rounded,
                         color: Palette.textColor2,
                         size: 50,
                       ),
@@ -193,6 +205,7 @@ class _festivalInfState extends State<festivalInf> {
                 ),
                 Container(
                   width: 105,
+                  height: 140,
                   decoration: BoxDecoration(
                     color: Palette.background2,
                     borderRadius: BorderRadius.circular(15),
@@ -202,26 +215,17 @@ class _festivalInfState extends State<festivalInf> {
                       SizedBox(
                         height: 15,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Icon(
-                            Icons.directions_car,
-                            color: Palette.textColor2,
-                          ),
-                          Text(
-                            "주차공간",
-                            style: TextStyle(
-                              color: Palette.textColor2,
-                            ),
-                          )
-                        ],
+                      Text(
+                        "프라이빗 도자관",
+                        style: TextStyle(
+                          color: Palette.textColor2,
+                        ),
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       Icon(
-                        Icons.emoji_emotions_outlined,
+                        Icons.account_balance_rounded,
                         color: Palette.textColor2,
                         size: 50,
                       ),
@@ -251,6 +255,7 @@ class _festivalInfState extends State<festivalInf> {
               children: [
                 Container(
                   width: 105,
+                  height: 140,
                   decoration: BoxDecoration(
                     color: Palette.background2,
                     borderRadius: BorderRadius.circular(15),
@@ -258,33 +263,24 @@ class _festivalInfState extends State<festivalInf> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 15,
+                        height: 7,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Icon(
-                            Icons.directions_car,
-                            color: Palette.textColor2,
-                          ),
-                          Text(
-                            "주차공간",
-                            style: TextStyle(
-                              color: Palette.textColor2,
-                            ),
-                          )
-                        ],
+                      Text(
+                        " 둘레둘레\n도자흙공방",
+                        style: TextStyle(
+                          color: Palette.textColor2,
+                        ),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 8,
                       ),
                       Icon(
-                        Icons.emoji_emotions_outlined,
+                        Icons.store_mall_directory_outlined,
                         color: Palette.textColor2,
-                        size: 50,
+                        size: 45,
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 8,
                       ),
                       Text(
                         "쾌적",
@@ -301,6 +297,7 @@ class _festivalInfState extends State<festivalInf> {
                 ),
                 Container(
                   width: 105,
+                  height: 140,
                   decoration: BoxDecoration(
                     color: Palette.background2,
                     borderRadius: BorderRadius.circular(15),
@@ -308,33 +305,24 @@ class _festivalInfState extends State<festivalInf> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 15,
+                        height: 7,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Icon(
-                            Icons.directions_car,
-                            color: Palette.textColor2,
-                          ),
-                          Text(
-                            "주차공간",
-                            style: TextStyle(
-                              color: Palette.textColor2,
-                            ),
-                          )
-                        ],
+                      Text(
+                        " 도자네시풍속\n장난감 만들기",
+                        style: TextStyle(
+                          color: Palette.textColor2,
+                        ),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 8,
                       ),
                       Icon(
-                        Icons.emoji_emotions_outlined,
+                        Icons.smart_toy_outlined,
                         color: Palette.textColor2,
-                        size: 50,
+                        size: 45,
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 8,
                       ),
                       Text(
                         "쾌적",
@@ -351,6 +339,7 @@ class _festivalInfState extends State<festivalInf> {
                 ),
                 Container(
                   width: 105,
+                  height: 140,
                   decoration: BoxDecoration(
                     color: Palette.background2,
                     borderRadius: BorderRadius.circular(15),
@@ -358,33 +347,24 @@ class _festivalInfState extends State<festivalInf> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 15,
+                        height: 7,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Icon(
-                            Icons.directions_car,
-                            color: Palette.textColor2,
-                          ),
-                          Text(
-                            "주차공간",
-                            style: TextStyle(
-                              color: Palette.textColor2,
-                            ),
-                          )
-                        ],
+                      Text(
+                        " 자연주의\n소품 만들기",
+                        style: TextStyle(
+                          color: Palette.textColor2,
+                        ),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 8,
                       ),
                       Icon(
-                        Icons.emoji_emotions_outlined,
+                        Icons.maps_home_work,
                         color: Palette.textColor2,
-                        size: 50,
+                        size: 45,
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 8,
                       ),
                       Text(
                         "쾌적",
@@ -409,6 +389,7 @@ class _festivalInfState extends State<festivalInf> {
               children: [
                 Container(
                   width: 105,
+                  height: 140,
                   decoration: BoxDecoration(
                     color: Palette.background2,
                     borderRadius: BorderRadius.circular(15),
@@ -416,33 +397,24 @@ class _festivalInfState extends State<festivalInf> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 15,
+                        height: 7,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Icon(
-                            Icons.directions_car,
-                            color: Palette.textColor2,
-                          ),
-                          Text(
-                            "주차공간",
-                            style: TextStyle(
-                              color: Palette.textColor2,
-                            ),
-                          )
-                        ],
+                      Text(
+                        "장작가마\n불집히기",
+                        style: TextStyle(
+                          color: Palette.textColor2,
+                        ),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 8,
                       ),
                       Icon(
-                        Icons.emoji_emotions_outlined,
+                        Icons.local_fire_department_outlined,
                         color: Palette.textColor2,
-                        size: 50,
+                        size: 45,
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 8,
                       ),
                       Text(
                         "쾌적",
@@ -459,6 +431,7 @@ class _festivalInfState extends State<festivalInf> {
                 ),
                 Container(
                   width: 105,
+                  height: 140,
                   decoration: BoxDecoration(
                     color: Palette.background2,
                     borderRadius: BorderRadius.circular(15),
@@ -466,33 +439,24 @@ class _festivalInfState extends State<festivalInf> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 15,
+                        height: 12,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Icon(
-                            Icons.directions_car,
-                            color: Palette.textColor2,
-                          ),
-                          Text(
-                            "주차공간",
-                            style: TextStyle(
-                              color: Palette.textColor2,
-                            ),
-                          )
-                        ],
+                      Text(
+                        "공연",
+                        style: TextStyle(
+                          color: Palette.textColor2,
+                        ),
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       Icon(
-                        Icons.emoji_emotions_outlined,
+                        Icons.audiotrack_rounded,
                         color: Palette.textColor2,
-                        size: 50,
+                        size: 45,
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 15,
                       ),
                       Text(
                         "쾌적",
@@ -509,6 +473,7 @@ class _festivalInfState extends State<festivalInf> {
                 ),
                 Container(
                   width: 105,
+                  height: 140,
                   decoration: BoxDecoration(
                     color: Palette.background2,
                     borderRadius: BorderRadius.circular(15),
@@ -516,33 +481,24 @@ class _festivalInfState extends State<festivalInf> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 15,
+                        height: 12,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Icon(
-                            Icons.directions_car,
-                            color: Palette.textColor2,
-                          ),
-                          Text(
-                            "주차공간",
-                            style: TextStyle(
-                              color: Palette.textColor2,
-                            ),
-                          )
-                        ],
+                      Text(
+                        "이색 퍼레이드",
+                        style: TextStyle(
+                          color: Palette.textColor2,
+                        ),
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       Icon(
-                        Icons.emoji_emotions_outlined,
+                        Icons.outlined_flag,
                         color: Palette.textColor2,
-                        size: 50,
+                        size: 45,
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 15,
                       ),
                       Text(
                         "쾌적",

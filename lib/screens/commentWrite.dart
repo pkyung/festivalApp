@@ -155,8 +155,10 @@ class _commentWriteState extends State<commentWrite> {
 
   Future createComments({required String comment}) async {
     final docComments = FirebaseFirestore.instance.collection("users").doc();
+    DateTime now = DateTime.now();
     final json = {
       "comments": comment,
+      "dateTime": now,
     };
 
     await docComments.set(json);
