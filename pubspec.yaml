@@ -64,6 +64,12 @@ flutter:
   uses-material-design: true
   assets:
     - image/capture.jpg
+    - image/ceramic.jpg
+    - image/ceramic1.jpeg
+    - image/ceramicFest.jpg
+    - image/ceramic2.jpg
+    - image/fire.jpg
+    - image/festival.jpg
   # To add assets to your application, add an assets section, like this:
 
   #   - images/a_dot_ham.jpeg

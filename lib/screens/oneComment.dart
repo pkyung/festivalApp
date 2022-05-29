@@ -30,7 +30,7 @@ class _CommentState extends State<Comment> {
         child: Column(
           children: [
             SizedBox(
-              height: 20,
+              height: 15,
             ),
             Text(
               "축제 한줄평",
@@ -51,7 +51,7 @@ class _CommentState extends State<Comment> {
             ),
             Container(
               width: MediaQuery.of(context).size.width - 70,
-              height: MediaQuery.of(context).size.height - 250,
+              height: MediaQuery.of(context).size.height - 300,
               color: Colors.white,
               child: StreamBuilder(
                   stream: FirebaseFirestore.instance
@@ -99,7 +99,7 @@ class _CommentState extends State<Comment> {
                   }),
             ),
             SizedBox(
-              height: 10,
+              height: 5,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
